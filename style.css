@@ -1,6 +1,6 @@
 body {
   background-color: #1b1b28;
-  padding-top: 20px;
+  padding-top: 10px;
   color: #fff;
   font-size: 18px;
   font-family: Arial, Helvetica, sans-serif;
@@ -8,30 +8,50 @@ body {
 
 #container {
   margin: auto;
-  width: 1200px;
+  width: 1300px;
   display: flex;
+
   padding-top: 20px;
 }
 
 .text-center {
   text-align: center;
 }
+hr {
+  border: 1px dashed #4a4d72;
+  margin: 20px 0 15px 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  margin: 10px 0 15px 0;
+}
 
 /* ////// GAME BOARD /////////*/
 #game-board {
-  width: 800px;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  flex-direction: column;
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  align-items: top;
 }
 
 .flip-card {
   width: 150px;
-  height: 150px;
-
-  color: #000;
   margin: 10px;
+  aspect-ratio: 1 / 1;
   display: inline-block;
   font-size: 110px;
   text-align: center;
-
   perspective: 1000px;
 }
 
@@ -44,6 +64,7 @@ body {
   transition: transform 0.6s;
   transform-style: preserve-3d;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }
 
 .flip-card-flip {
@@ -57,13 +78,13 @@ body {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
-  border-radius: 8px;
 }
 
 .flip-card-front {
-  background-color: #1cc2bf;
+  background-color: #1b1b28;
   color: black;
 }
 
@@ -80,7 +101,7 @@ body {
 
 .score-board-panel {
   background-color: #292b3e;
-  padding: 10px 50px;
+  padding: 30px 40px;
   border-radius: 5px;
   margin: 10px;
   width: 300px;
