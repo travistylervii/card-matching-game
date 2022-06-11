@@ -8,8 +8,36 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Card Match Game</h1>
-    <div id="container"></div>
+    <h1 class="text-center">Card Match Game</h1>
+  <div id="container" class="container flex">
+      <div id="game-board"></div>
+      <div class="score-board">
+        <div class="score-board-panel">
+          <h2 class="text-center">Score Board</h2>
+          <div class="text-center">
+            <button>Easy</button>
+            <button>Medium</button>
+            <button>Hard</button>
+          </div>
+          <div>
+            <h3>Objective:</h3>
+            <p>Try and get under 10 total moves</p>
+          </div>
+          <div>
+          <h3>Total Moves:</h3>
+          <p class="total-moves">0</p>
+        </div>
+        <div>
+          <h3>Matching Pairs:</h3>
+          <p class="matching-pairs-score">0</p></div>
+        </div>
+        
+        
+        </div>
+          
+      </div>
+      </div>
+  </div>
     <script src="javascript.js"></script>
   </body>
 </html>

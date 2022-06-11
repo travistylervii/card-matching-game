@@ -1,8 +1,15 @@
-const cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑"];
+//Add pairs matched
+//Add total Moves
+//Add End game button
+//Add reset game button
+
+let cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑"];
 const cardsPaired = [];
+let totalMoves = 0;
+let matchingPairMoves = 0;
 
 //Find container for cards
-const boardDiv = document.querySelector("#container");
+const boardDiv = document.querySelector("#game-board");
 
 //Initialize variables
 let nameMatch = [];
@@ -10,21 +17,19 @@ let flipCount = 0;
 let matchingCards = [];
 let j = 0;
 
-//Create card pairs
+//Create card pairs array
 for (let i = 0; i < cards.length * 2; i++) {
-  if (j === cards.length) {
-    j = 0;
-  }
+  if (j >= cards.length) j = 0;
+
   cardsPaired.push(cards[j]);
   j++;
 }
+
 //Randomize cards
-cardsPaired.sort(function () {
-  return 0.5 - Math.random();
-});
+cardsPaired.sort(() => 0.5 - Math.random());
 
 //Create cards
-for (let i = 0; i < cards.length * 2; i++) {
+for (let i = 0; i < cardsPaired.length; i++) {
   const flipCard = document.createElement("div");
   const flipCardInner = document.createElement("div");
   const flipCardFront = document.createElement("div");
@@ -45,8 +50,7 @@ for (let i = 0; i < cards.length * 2; i++) {
 document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
   flipCard.addEventListener("click", () => {
     //Flip card on card click
-    flipCard.classList.add("flip-card-flip");
-    flipCard.classList.add("disable-click");
+    flipCard.classList.add("flip-card-flip", "disable-click");
 
     //Add card name to array to compare matching cards with conditional later.
     nameMatch.push(flipCard.textContent);
@@ -55,50 +59,51 @@ document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
     flipCount++;
 
     //Match the card values if two are flipped
-    if (flipCount === 2) {
+    if (flipCount >= 2) {
+      //Add to totalMoves count
+      const totalMovesScore = document.querySelector(".total-moves");
+      totalMoves++;
+      totalMovesScore.textContent = totalMoves;
+
       //disable clicks after 2 cards have been flipped
-      document.querySelectorAll(".flip-card-inner").forEach((item) => {
-        item.classList.add("disable-click");
+      document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
+        flipCard.classList.add("disable-click");
       });
 
-      //Temporaly diable click on all cards
+      //If cards flipped do match
+      if (nameMatch[0] === nameMatch[1]) {
+        //Add card value to matching cards array
+        matchingCards.push(flipCard.textContent);
 
-      //If cards flipped do NOT match, flip back
-      if (nameMatch[0] !== nameMatch[1]) {
+        //Enable clicking again, except for matching cards
+        document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
+          if (!matchingCards.includes(flipCard.textContent))
+            flipCard.classList.remove("disable-click");
+        });
+
+        matchingPairMoves++;
+        console.log(matchingPairMoves);
+
+        const matchinPairsScore = document.querySelector(
+          ".matching-pairs-score"
+        );
+        matchinPairsScore.textContent = matchingPairMoves;
+
+        //Else they don't match
+      } else {
         //Delay flip back
         window.setTimeout(function () {
           //Skip every card thats already matched (on matchingCard Array)
-          document.querySelectorAll(".flip-card-inner").forEach((item) => {
+          document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
             //IF name is in matchingCards, don't not flip back
-            if (!matchingCards.includes(item.textContent)) {
-              item.classList.remove("flip-card-flip");
-              item.classList.remove("disable-click");
-            }
+            if (!matchingCards.includes(flipCard.textContent))
+              flipCard.classList.remove("flip-card-flip", "disable-click");
           });
         }, 1000);
-
-        //Reset Flipcount
-        flipCount = 0;
-
-        //Clear Arrays
-        nameMatch = [];
-
-        //If cards flipped do match
-      } else if (nameMatch[0] === nameMatch[1]) {
-        //Add class to both cards
-        flipCount = 0;
-        nameMatch = [];
-        matchingCards.push(flipCard.textContent);
-
-        //Enable clicking back, except for matching cards
-        document.querySelectorAll(".flip-card-inner").forEach((item) => {
-          if (!matchingCards.includes(item.textContent)) {
-            item.classList.remove("disable-click");
-          }
-        });
-
-        //If just one card is flipped
       }
+      //Reset variables / clear array
+      flipCount = 0;
+      nameMatch = [];
     }
   });
 });
