@@ -1,6 +1,13 @@
 const cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑"];
 const cardsPaired = [];
 
+//Find container for cards
+const boardDiv = document.querySelector("#container");
+
+//Initialize variables
+let nameMatch = [];
+let flipCount = 0;
+let matchingCards = [];
 let j = 0;
 
 //Create card pairs
@@ -15,8 +22,6 @@ for (let i = 0; i < cards.length * 2; i++) {
 cardsPaired.sort(function () {
   return 0.5 - Math.random();
 });
-
-const boardDiv = document.querySelector("#container");
 
 //Create cards
 for (let i = 0; i < cards.length * 2; i++) {
@@ -36,43 +41,47 @@ for (let i = 0; i < cards.length * 2; i++) {
   flipCardInner.appendChild(flipCardBack);
   flipCardBack.textContent = cardsPaired[i];
 }
-let nameMatch = [];
-let flipCount = 0;
-let matchingCards = [];
 
 document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
-  flipCard.addEventListener("click", (event) => {
+  flipCard.addEventListener("click", () => {
     //Flip card on card click
     flipCard.classList.add("flip-card-flip");
-    //Add card name to array to match up later.
+    flipCard.classList.add("disable-click");
+
+    //Add card name to array to compare matching cards with conditional later.
     nameMatch.push(flipCard.textContent);
 
-    //Count each time the cards are clicked
+    //Count each time the cards are clicked/flipped
     flipCount++;
 
-    //Match the card values
+    //Match the card values if two are flipped
     if (flipCount === 2) {
-      //If cards flipped do NOT match
+      //disable clicks after 2 cards have been flipped
+      document.querySelectorAll(".flip-card-inner").forEach((item) => {
+        item.classList.add("disable-click");
+      });
+
+      //Temporaly diable click on all cards
+
+      //If cards flipped do NOT match, flip back
       if (nameMatch[0] !== nameMatch[1]) {
+        //Delay flip back
         window.setTimeout(function () {
-          //Skip every card on matchingCard Array
-          //Remove flipCard.classList.remove("flip-card-flip");
-
+          //Skip every card thats already matched (on matchingCard Array)
           document.querySelectorAll(".flip-card-inner").forEach((item) => {
-            //IF name is in matchingCards, don't remove
-
+            //IF name is in matchingCards, don't not flip back
             if (!matchingCards.includes(item.textContent)) {
               item.classList.remove("flip-card-flip");
+              item.classList.remove("disable-click");
             }
           });
         }, 1000);
+
         //Reset Flipcount
         flipCount = 0;
 
-        //Clear Array
+        //Clear Arrays
         nameMatch = [];
-        nameMatch.pop();
-        nameMatch.pop();
 
         //If cards flipped do match
       } else if (nameMatch[0] === nameMatch[1]) {
@@ -80,13 +89,15 @@ document.querySelectorAll(".flip-card-inner").forEach((flipCard) => {
         flipCount = 0;
         nameMatch = [];
         matchingCards.push(flipCard.textContent);
-        console.log("flipCount: ", flipCount);
-        console.log("Name Match: ", nameMatch);
-        console.log("Matching Cards: ", matchingCards);
+
+        //Enable clicking back, except for matching cards
+        document.querySelectorAll(".flip-card-inner").forEach((item) => {
+          if (!matchingCards.includes(item.textContent)) {
+            item.classList.remove("disable-click");
+          }
+        });
 
         //If just one card is flipped
-      } else {
-        //Do nothing
       }
     }
   });

@@ -62,3 +62,6 @@ h1 {
   color: #000;
   transform: rotateY(180deg);
 }
+.disable-click {
+  pointer-events: none;
+}
