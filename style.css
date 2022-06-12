@@ -76,8 +76,8 @@ h5 {
   position: absolute;
   width: 100%;
   height: 100%;
-  /* -webkit-backface-visibility: hidden;
-  backface-visibility: hidden; */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 
   border-radius: 8px;
   -webkit-border-radius: 8px;
@@ -168,7 +168,7 @@ button {
 }
 
 .hide1 {
-  /* display: none; */
+  display: none;
 }
 .hide2 {
   display: none;

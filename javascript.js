@@ -5,7 +5,6 @@ const totalMovesScore = document.querySelector(".total-moves");
 const matchingPairsScore = document.querySelector(".matching-pairs-score");
 const modal = document.querySelector(".modal");
 const winningMessage = document.querySelector(".winning-message");
-const closeButton = document.querySelector(".close-button");
 
 let cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑", "🍔", "🌮"];
 let cardsPaired = [];
@@ -113,20 +112,18 @@ function main() {
         }
 
         //Display winning modal display
-        if (matchingPairMoves === 10 && totalMoves < 30) {
-          modal.classList.remove("hide");
-
+        if (matchingPairMoves >= 10 && totalMoves < 30) {
+          modal.classList.remove("hide1");
+          console.log("Hey");
           winningMessage.textContent = "Grand Prize";
-        } else if (matchingPairMoves === 10) {
+        } else if (matchingPairMoves >= 10) {
           modal.textContent = "Here's your participation trophy";
-          modal.classList.remove("hide");
+          modal.classList.remove("hide2");
         }
         //Reset variables / clear array
         flipCount = 0;
         nameMatch = [];
       }
-
-      //Add close button closeButton
     });
   });
 }
