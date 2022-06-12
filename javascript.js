@@ -3,6 +3,9 @@
 //Add End game button
 //Add reset game button
 
+const boardDiv = document.querySelector("#game-board");
+const totalMovesScore = document.querySelector(".total-moves");
+const matchingPairsScore = document.querySelector(".matching-pairs-score");
 let cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑", "🍔", "🌮"];
 let cardsPaired = [];
 let totalMoves = 0;
@@ -12,37 +15,25 @@ let flipCount = 0;
 let matchingCards = [];
 let j = 0;
 
-//Creating board cards divs
-
-//Define gameboard
-const boardDiv = document.querySelector("#game-board");
-
 function gameReset() {
+  document.getElementById("game-board").innerHTML = "";
+  totalMovesScore.textContent = 0;
+  matchingPairsScore.textContent = 0;
   cardsPaired = [];
-  flipCount = 0;
-  nameMatch = [];
   totalMoves = 0;
   matchingPairMoves = 0;
   nameMatch = [];
   flipCount = 0;
   matchingCards = [];
   j = 0;
-  document.getElementById("game-board").innerHTML = "";
-}
-
-function gameDifficulty(difficulty) {
-  console.log("gameDifficulty");
-  if (difficulty === "easy") {
-    console.log("gameDifficulty - Easy");
-    cards = ["🎉", "🍕", "🦄", "🐶"];
-  } else if (difficulty === "medium") {
-    cards = ["🎉", "🍕", "🦄", "🐶", "🍔", "🌮"];
-  } else {
-    cards = ["🎉", "🍕", "🦄", "🐶", "🍻", "🔥", "🦊", "🤑", "🍔", "🌮"];
-  }
 }
 
 function main() {
+  console.log(totalMoves);
+  console.log(matchingPairMoves);
+  console.log(flipCount);
+  console.log(totalMoves);
+  console.log(matchingCards);
   //Create card pairs array
   for (let i = 0; i < cards.length * 2; i++) {
     if (j >= cards.length) j = 0;
@@ -69,6 +60,7 @@ function main() {
     flipCard.appendChild(flipCardInner);
     flipCardInner.appendChild(flipCardFront);
     flipCardInner.appendChild(flipCardBack);
+
     flipCardBack.textContent = cardsPaired[i];
   }
 
@@ -86,7 +78,7 @@ function main() {
       //Match the card values if two are flipped
       if (flipCount >= 2) {
         //Add to totalMoves count
-        const totalMovesScore = document.querySelector(".total-moves");
+
         totalMoves++;
         totalMovesScore.textContent = totalMoves;
 
@@ -107,12 +99,7 @@ function main() {
           });
 
           matchingPairMoves++;
-          console.log(matchingPairMoves);
-
-          const matchinPairsScore = document.querySelector(
-            ".matching-pairs-score"
-          );
-          matchinPairsScore.textContent = matchingPairMoves;
+          matchingPairsScore.textContent = matchingPairMoves;
 
           //Else they don't match
         } else {
@@ -139,7 +126,6 @@ function main() {
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", () => {
     gameReset();
-    gameDifficulty(button.className);
     main();
   });
 });
