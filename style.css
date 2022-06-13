@@ -29,6 +29,10 @@ h5 {
   padding: 0;
   margin: 10px 0 15px 0;
 }
+.footer {
+  font-size: 0.8em;
+  margin-top: 50px;
+}
 
 /* ////// GAME BOARD /////////*/
 #game-board {
